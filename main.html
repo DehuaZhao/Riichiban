@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mahjong Points Test</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+
+    <div id="winHand">
+        <hand-img
+            v-for="item in tileList"
+            v-bind:tile="item"
+            v-bind:key="item.id"
+        ></hand-img>
+    </div>
+
+    <div id="changkuang">
+        <p>{{ tsumoron }} {{ roundwind }} {{ selfwind }} {{richibang}} {{ honba }}</p>
+    </div>
+
+    <div id="pointsInput">
+        <input>
+        <button @click="checkAnswer">确认</button>
+    </div>
+
+    <div id="testResult">
+        <button @click="nextQuestion">下一题</button>
+    </div>
+
+    <script src='varible.js'></script>
+    <script src='script.js'></script>
+</body>
+</html>
