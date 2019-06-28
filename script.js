@@ -1,14 +1,24 @@
 function start() {
     let handInfo = {
-        bakaze : genKaze("Ba"), // 场风
-        jikaze : genKaze("Ji"), // 自风
-        honba : genRan(0, 5),   // 几本场
-        riichibou : genRan(0, 2), // 立直棒个数
-        winHand : genWinHand(), // 赢牌手牌
-        winTile : genWinTile(), // 和张
+        bakaze: genKaze("Ba"), // 场风
+        jikaze: genKaze("Ji"), // 自风
+        honba: genRan(0, 5),   // 几本场
+        riichibou: genRan(0, 2), // 立直棒个数
+        winHand: genWinHand(), // 赢牌手牌
+        winTile: genWinTile(), // 和张
+        // doras:
     };
 
-    let point = calPoint(handInfo); // 计算目前手牌翻
+    //let point = calPoint(handInfo); // 计算目前手牌翻
+
+    // 只传递了手牌编码过去, 其他都未包含
+    let winHandTiles = handInfo.winHand; // e.g. ["4s4s4s", "3m3m3m", "0m6m7m", "6p7p8p", "9p9p"]
+    let winHandJson = [];
+    for (let j=0; j < 2*14; j = j+2) {
+        winHandJson.push(JSON.parse('{"tileCode": ' + '"' + winHandTiles.join('').substr(j, 2) + '"}'));
+    }
+
+    return winHandJson;
 }
 
 function genKaze(kazeType) {
@@ -38,6 +48,7 @@ function genWinTile() {
 }
 
 function genDora() {
+    let dora = genRan()
     //return
 };
 
@@ -100,6 +111,8 @@ function authHand(hand) {
     let handStr = hand.join("");
     let tileStat = countNumberOfTile(handStr);
 
+    // pending: 检查包含朵拉提示牌数量.
+
     // check num of akadora,
     if (tileStat["0m"] > 1 || tileStat["0p"] > 1 || tileStat["0s"] > 1 ) {
         return "FAIL";
@@ -116,6 +129,7 @@ function authHand(hand) {
         return "FAIL";
        }
     }
+
     return "SUCCESS";
 }
 
@@ -144,16 +158,6 @@ function genRan(min, max) {
 
 
 
-
-
-// before refactor
-
-var winHandTiles = genWinHand(); // e.g. ["4s4s4s", "3m3m3m", "0m6m7m", "6p7p8p", "9p9p"]
-var winHandJson = [];
-for (var j=0; j < 2*14; j = j+2) {
-    winHandJson.push(JSON.parse('{"tileCode": ' + '"' + winHandTiles.join('').substr(j, 2) + '"}'));
-}
-
 Vue.component('hand-img', {
     props: ['tile'],
     template: '<img v-bind:src="\'tile/\' + tile.tileCode + \'.gif\'" />'
@@ -162,8 +166,8 @@ Vue.component('hand-img', {
 var winHand = new Vue({
     el: '#winHand',
     data: {
-        tileList: winHandJson
-    }
+        tileList: winHandJson = start()
+    },
 });
 
 var changkuang = new Vue({
@@ -185,6 +189,15 @@ var pointsInput = new Vue({
     methods: {
         checkAnswer: function () {
 
+        }
+    }
+});
+
+var nextQuestion = new Vue({
+    el: '#nextQuestion',
+    methods: {
+        nextQuestion: function getNewQuestion() {
+            winHand.tileList = start();
         }
     }
 });
