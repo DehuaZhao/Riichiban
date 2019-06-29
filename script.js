@@ -9,6 +9,8 @@ function start() {
         // doras:
     };
 
+    console.log(handInfo)
+
     //let point = calPoint(handInfo); // 计算目前手牌翻
 
     // 只传递了手牌编码过去, 其他都未包含
@@ -75,7 +77,7 @@ function calPoint(handInfo) {
     let tsumo;
     let whichFuuro;
 
-    let preYaku = calPreYaku(handInfo)
+    let preYaku = calPreYaku(handInfo);
 
     if (checkIifanshibari(preYaku)) {
         if (checkPinfuPeikou(preYaku)) {
@@ -156,8 +158,6 @@ function genRan(min, max) {
     return parseInt(Math.random() * (max - min + 1) + min, 10);
 };
 
-
-
 Vue.component('hand-img', {
     props: ['tile'],
     template: '<img v-bind:src="\'tile/\' + tile.tileCode + \'.gif\'" />'
@@ -202,21 +202,3 @@ var nextQuestion = new Vue({
     }
 });
 
-function genHand() {
-    let tiles = genWinHand();
-
-    // 含有未完成部分
-    let hand = {
-        "tiles": tiles,
-        "tsumoron": genRan(0, 1) == 0 ? 'tsumo' : 'ron',
-        "roundwind": kaze[genRan(0, 1)],
-        "selfwind": kaze[genRan(0, 3)],
-        "richibang": genRan(0, 4),
-        "honba": genRan(0, 4),
-        "dora": allTiles[genRan(0, allTiles.length)],
-        "winingHand": tiles[genRan(0, 4)].charAt(genRan(0, 1)),
-        "fuuro": genFuuro()
-    };
-
-    return hand;
-};

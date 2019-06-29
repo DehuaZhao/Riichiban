@@ -172,6 +172,13 @@
 中 | 中 | chun | red dragon
 白 | 白 | haku | white dragon
  | | |
+断幺九 | 断幺九 | tanyaouchuu | all simples
+役牌 | 役牌 | yakuhai | value triplet set
 平和 | 平和 | pinfu
 一盃口 | 一杯口 | iipeikou
 二盃口 | 二杯口 | ryanpeikou
+清老头 | 清老头 | chinroutou | All termainals
+混老头 | 混老头 | honroutou | All terminals and honors
+純全帯么九 | 纯全带幺九 | junchan | Terminal in each set
+混全帯么九 | 混全带么九 | chantai | Terminal or honor in each set
+
