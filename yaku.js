@@ -136,7 +136,7 @@ function junchan(handInfo) {
 }
 
 /**
- * 混全带幺九, (hon) chantai (yaochu), Terminal or honor in each set
+ * 混全带幺九, (Hon) chantai (yaochu), Terminal or honor in each set
  *
  *
  * Must be concealed : no
@@ -177,7 +177,7 @@ function chantai(handInfo) {
  * Han : 2
  */
 function shousangen(handInfo) {
-    let re = /(5z)|(6z)|(7z)/g;
+    let re = /5z|6z|7z/g;
     if (handInfo.winHand.join('').match(re).length == 8 ) {
         handInfo.yaku.push({shousangen: 2});
     }
@@ -190,10 +190,10 @@ function shousangen(handInfo) {
  * Must be concealed : no
  * Han : yakuman
  */
-function daisangen(handinfo) {
-    let re = /(5z)|(6z)|(7z)/g;
-    if (handinfo.winhand.join('').match(re).length == 9 ) {
-        handinfo.yaku.push({daisangen: "yakuman"});
+function daisangen(handInfo) {
+    let re = /5z|6z|7z/g;
+    if (handInfo.winHand.join('').match(re).length == 9 ) {
+        handInfo.yaku.push({daisangen: "yakuman"});
     }
 }
 
@@ -205,7 +205,7 @@ function daisangen(handinfo) {
  * Han : yakuman
  */
 function shousuushii(handInfo) {
-    let re = /(1z)|(2z)|(3z)|(4z)/g
+    let re = /1z|2z|3z|4z/g
     if (handInfo.winHand.join('').match(re).length == 11 ) {
         handInfo.yaku.push({shousuushii: "yakuman"});
     }
@@ -219,8 +219,93 @@ function shousuushii(handInfo) {
  * Han : yakuman
  */
 function daisuushii(handInfo) {
-    let re = /(1z)|(2z)|(3z)|(4z)/g
+    let re = /1z|2z|3z|4z/g
     if (handInfo.winHand.join('').match(re).length == 12 ) {
         handInfo.yaku.push({daisuushii: "yakuman"});
     }
 }
+
+/**
+ * 平和, Pinfu, Flat hand
+ *
+ * Must be concealed : yes
+ * Han : 1
+ */
+function pinfu(handInfo) {
+    let yakuhai = sangen.concat(handInfo.bakaze, handInfo.jikaze);
+    let re_wo = new RegExp(yakuhai.join('|'), "g");
+    let pinfu = false;
+
+    if (handInfo.match(re_wo) == null && handInfo.menzen == true) {
+        for (let i=0; 1<4; i++) {
+            let digit = handInfo.winHand[i].match(/\d/g);
+            if (digit[2] == digit[0]) {
+                pinfu = false;
+                break;
+            }
+        }
+        pinfu = true;
+    }
+
+    if (pinfu) {
+        handInfo.yaku.push({pinfu: 1});
+    }
+}
+
+/**
+ * 三色同顺, sanshoku doujun, Triple sequence
+ *
+ * Must be concealed : no
+ * Han : 2 (concealed) / 1 (open)
+ */
+function peikousanshoku(handInfo) {
+    var winHand = handInfo.winHand;
+    for (let i=0; i<winHand.length; i++) {
+        winHand[i] = winHand[i].replace(/0/g, '5');
+    }
+
+    var storedShuntsu = [];
+    var numOfPeikou = 0;
+    var numOfSanshoku = 0;
+
+    for (let i=0; i<4; i++) {
+        let mentsu = winHand[i];
+        let digit = mentsu.match(/\d/g);
+        if (digit[0] !== digit[1]) {
+            for (let j=0; j<storedShuntsu.length; j++) {
+                if (storedShuntsu[j] == mentsu) {
+                    numOfPeikou += 1;
+                } else if (storedShuntsu[j].match(/\d/g) == digit) {
+                    numOfSanshoku += 1;
+                }
+            }
+            if (storedShuntsu.indexOf(mentsu) < 0) {
+                storedShuntsu.push(mentsu);
+            }
+        }
+    }
+
+    // if (numOfPeikou == 1) {
+    //     handInfo.yaku.push({iipeikou: 1}); //menzen
+    // }
+
+    // if (numOfPeikou == 2) {
+    //     handInfo.yaku.push({ryanpeikou: 3}); //menzen
+    // }
+
+    if (numOfSanshoku >= 3) {
+        handInfo.yaku.push({sanshokudoujun: 2}); // fuuru -1
+    }
+}
+
+
+/** 一杯口, Iipeikou, Double sequence
+ *
+ * Must be concealed : yes
+ * Han : 1
+ *
+ * 二杯口, ryanpeikou, Twice double sequence
+ *
+ * Must be concealed : yes
+ * Han : 3
+ */

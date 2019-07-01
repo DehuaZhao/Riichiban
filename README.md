@@ -15,11 +15,12 @@
 ### 1.2 支付点数
 
 支付点数P为**基础点数α**与**和牌系数𝛽**的乘积向上取整百:
+
 <img src="https://latex.codecogs.com/gif.latex?P=100\times\left&space;\lceil&space;\frac{\alpha&space;\times&space;\beta}{100}&space;\right&space;\rceil" title="P=100\times\left\lceil\frac{\alpha\times\beta}{100}\right\rceil"/>
 
 **基础点数α**为: <img src="https://latex.codecogs.com/gif.latex?\alpha=f_u\times2^{f_a&plus;2}" title="\alpha=f_u\times2^{f_a+2}"/>
 
-即以符为基础进行翻番, 最低翻两番, 达成多少翻数则再加多少番. 具体将在[1.3](#1.3符)和[1.4](1.4翻)中介绍.
+即以符为基础进行翻番, 最低翻两番, 达成多少翻数则再加多少番. 具体将在[1.3](#13-符)和[1.4](#14-翻)中介绍.
 
 **和牌系数𝛽**根据和牌情况分别为:
 - 6, 亲家荣和时放铳者支付
@@ -37,7 +38,7 @@
 三倍満 | 11 \ 12飜 | 6000
 役満 \ 累计役満 | 役満 \ 13飜及以上 | 8000
 
-### 1.3符
+### 1.3 符
 
 <img src="https://latex.codecogs.com/gif.latex?f_u" title="f_u"/>为一副手牌的符数, 指一副牌手牌的构成和和牌的方式, 计算方式为:
 
@@ -95,7 +96,7 @@
 
 手牌达到5翻及以上时, 无需数符数.
 
-### 1.4翻
+### 1.4 翻
 
 <img src="https://latex.codecogs.com/gif.latex?f_a_" title="f_a_"/>为一副手牌的翻数, 指牌面达成的整体结构以及和牌位置, 翻种和翻数完全列举如以下:
 
@@ -174,9 +175,6 @@
 門前清自摸和 | 门清自摸和 | menzenchintsumo | Self-pick
 断幺九 | 断幺九 | tanyaochuu | all simples
 役牌 | 役牌 | yakuhai | value triplet set
-平和 | 平和 | pinfu
-一盃口 | 一杯口 | iipeikou
-二盃口 | 二杯口 | ryanpeikou
 清老头 | 清老头 | chinroutou | all termainals
 混老头 | 混老头 | honroutou | all terminals and honors
 純全帯么九 | 纯全带幺九 | junchan | terminal in each set
@@ -185,4 +183,8 @@
 大三元 | 大三元 | daisangen | big three dragons
 小四喜 | 小四喜 | shousuushii | little four winds
 大四喜 | 大四喜 | daisuushii | big four winds
+平和 | 平和 | pinfu | flat hand
+一盃口 | 一杯口 | iipeikou | double sequence
+二盃口 | 二杯口 | ryanpeikou | twice double sequence
+三色同順 | 三色同顺 | sanshokudoujun | triple sequence
 
