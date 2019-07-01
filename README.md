@@ -17,15 +17,15 @@
 支付点数P为**基础点数α**与**和牌系数𝛽**的乘积向上取整百:
 <img src="https://latex.codecogs.com/gif.latex?P=100\times\left&space;\lceil&space;\frac{\alpha&space;\times&space;\beta}{100}&space;\right&space;\rceil" title="P=100\times\left\lceil\frac{\alpha\times\beta}{100}\right\rceil"/>
 
-即以符为基础进行翻番, 最低翻两番, 达成某种翻种则加番. 具体将在1.3和1.4中介绍.
-
 **基础点数α**为: <img src="https://latex.codecogs.com/gif.latex?\alpha=f_u\times2^{f_a&plus;2}" title="\alpha=f_u\times2^{f_a+2}"/>
 
+即以符为基础进行翻番, 最低翻两番, 达成多少翻数则再加多少番. 具体将在[1.3](#1.3符)和[1.4](1.4翻)中介绍.
+
 **和牌系数𝛽**根据和牌情况分别为:
-6, 亲家荣和时放铳者支付
-4, 子家荣和时放铳者支付
-2, 亲家自摸时各自家支付, 或子家自摸时亲加支付
-1, 子家自摸时自家支付
+- 6, 亲家荣和时放铳者支付
+- 4, 子家荣和时放铳者支付
+- 2, 亲家自摸时各自家支付, 或子家自摸时亲加支付
+- 1, 子家自摸时自家支付
 
 满贯以上的基础点数不按照以上算法进行计算, 为直接给出:
 
@@ -37,7 +37,7 @@
 三倍満 | 11 \ 12飜 | 6000
 役満 \ 累计役満 | 役満 \ 13飜及以上 | 8000
 
-### 1.3 符
+### 1.3符
 
 <img src="https://latex.codecogs.com/gif.latex?f_u" title="f_u"/>为一副手牌的符数, 指一副牌手牌的构成和和牌的方式, 计算方式为:
 
@@ -95,7 +95,7 @@
 
 手牌达到5翻及以上时, 无需数符数.
 
-### 1.4 翻
+### 1.4翻
 
 <img src="https://latex.codecogs.com/gif.latex?f_a_" title="f_a_"/>为一副手牌的翻数, 指牌面达成的整体结构以及和牌位置, 翻种和翻数完全列举如以下:
 
@@ -108,14 +108,13 @@
 役満 | 天和〇, 地和〇, 大三元, 四暗刻, 四暗刻単騎, 字一色, 緑一色, 清老頭, 国士無双, 国士無双13面, 大四喜, 小四喜, 四槓子, 九蓮宝燈, 純正九蓮宝燈
 懸賞 | 各1飜: ドラ, 赤ドラ, 裏ドラ, 一発〇
 
-▼ = 副露减1翻 (食い下がりあり) / ★ = 门清限定 (門前のみ)
-〇 = 与和牌位置有关的翻种本应用不作考察: 槍槓, 嶺上開花, 海底摸月, 河底撈魚, 両立直, 天和, 地和, 一発.
+▼ = 副露减1翻 (食い下がりあり) / ★ = 门清限定 (門前のみ) / 〇 = 与和牌位置有关的翻种本应用不作考察.
 
 ## 2 术语及对应的变量名
 
 主要以日文罗马字命变量名, 少量以英文翻译命名.
 
-日文 | 中文 | 日文罗马字 | 英译
+日文 | 中文 | 日文罗马字 | 英文翻译
 -- | -- | -- | --
 麻将 | 麻将 | mahjong
 手牌 | 手牌 | tehai
@@ -172,13 +171,18 @@
 中 | 中 | chun | red dragon
 白 | 白 | haku | white dragon
  | | |
-断幺九 | 断幺九 | tanyaouchuu | all simples
+門前清自摸和 | 门清自摸和 | menzenchintsumo | Self-pick
+断幺九 | 断幺九 | tanyaochuu | all simples
 役牌 | 役牌 | yakuhai | value triplet set
 平和 | 平和 | pinfu
 一盃口 | 一杯口 | iipeikou
 二盃口 | 二杯口 | ryanpeikou
-清老头 | 清老头 | chinroutou | All termainals
-混老头 | 混老头 | honroutou | All terminals and honors
-純全帯么九 | 纯全带幺九 | junchan | Terminal in each set
-混全帯么九 | 混全带么九 | chantai | Terminal or honor in each set
+清老头 | 清老头 | chinroutou | all termainals
+混老头 | 混老头 | honroutou | all terminals and honors
+純全帯么九 | 纯全带幺九 | junchan | terminal in each set
+混全帯么九 | 混全带么九 | chantai | terminal or honor in each set
+小三元 | 小三元 | shousangen | little three dragons
+大三元 | 大三元 | daisangen | big three dragons
+小四喜 | 小四喜 | shousuushii | little four winds
+大四喜 | 大四喜 | daisuushii | big four winds
 
