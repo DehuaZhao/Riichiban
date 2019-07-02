@@ -60,22 +60,22 @@ function tanyaochuu(handInfo) {
 function yakuhai(handInfo) {
     let re1 = new RegExp("(" + sangen.join('|') + "){3}", "g");
     let yaku_sangen = handInfo.winHand.join('').match(re1);
-    for (let val in yaku_sangen) {
-        let sangenName = "yakuhai: " + yaku_sangen[val];
+    for (let e in yaku_sangen) {
+        let sangenName = "yakuhai: " + yaku_sangen[e];
         handInfo.yaku.push({[sangenName]: 1});
     }
 
     let re2 = new RegExp("(" + handInfo.bakaze + "){3}", "g");
     let yaku_bakaze = handInfo.winHand.join('').match(re2);
-    for (let val in yaku_bakaze) {
-        let bakazeName = "yakuhai: " + yakuhai[val];
+    for (let e in yaku_bakaze) {
+        let bakazeName = "yakuhai: " + yakuhai[e];
         handInfo.yaku.push({[bakazeName]: 1});
     }
 
     let re3 = new RegExp("(" + handInfo.jikaze + "){3}", "g");
     let yaku_jikaze = handInfo.winHand.join('').match(re3);
-    for (let val in yaku_jikaze) {
-        let jikazeName = "yakuhai: " + yakuhai[val];
+    for (let e in yaku_jikaze) {
+        let jikazeName = "yakuhai: " + yakuhai[e];
         handInfo.yaku.push({[jikazeName]: 1});
     }
 }
@@ -104,8 +104,8 @@ function chinroutou(handInfo) {
 function honroutou(handInfo) {
     let re_wo = /[2-8][mps]/g;
     let re_w  = /z/g;
-    if (handInfo.winHand.join('').match(re_wo) == null
-        && handInfo.winHand.join('').match(re_w) !== null) {
+    if (handInfo.winHand.join('').match(re_wo) == null &&
+        handInfo.winHand.join('').match(re_w) !== null) {
         handInfo.yaku.push({honroutou: 2});
     }
 }
@@ -149,8 +149,8 @@ function chantai(handInfo) {
     let chantai = false;
 
     // 手牌数组里必须含有字和一组顺子, 且数组里的每个元素: 不含19就含字
-    if (handInfo.winHand.join('').match(rez) !== null
-        && handInfo.winHand.join('').match(re_shuntsu) !== null) {
+    if (handInfo.winHand.join('').match(rez) !== null &&
+        handInfo.winHand.join('').match(re_shuntsu) !== null) {
         for (let i = 0; i < 5; i++) {
             if (handInfo.winHand[i].match(re1) == null) {
                 if (handInfo.winHand[i].match(rez) == null) {
@@ -253,30 +253,27 @@ function pinfu(handInfo) {
 }
 
 /**
- * 三色同顺, sanshoku doujun, Triple sequence
+ * 三色同顺, Sanshoku doujun, Triple sequence
  *
  * Must be concealed : no
  * Han : 2 (concealed) / 1 (open)
  */
-function peikousanshoku(handInfo) {
+function sanshokudoujun(handInfo) {
+    var storedShuntsu = [];
+    var numOfDoujun = 0;
     var winHand = handInfo.winHand;
     for (let i=0; i<winHand.length; i++) {
         winHand[i] = winHand[i].replace(/0/g, '5');
     }
-
-    var storedShuntsu = [];
-    var numOfPeikou = 0;
-    var numOfSanshoku = 0;
 
     for (let i=0; i<4; i++) {
         let mentsu = winHand[i];
         let digit = mentsu.match(/\d/g);
         if (digit[0] !== digit[1]) {
             for (let j=0; j<storedShuntsu.length; j++) {
-                if (storedShuntsu[j] == mentsu) {
-                    numOfPeikou += 1;
-                } else if (storedShuntsu[j].match(/\d/g) == digit) {
-                    numOfSanshoku += 1;
+                if (storedShuntsu[j] !== mentsu &&
+                    storedShuntsu[j].match(/\d/g).join('') == digit.join('')) {
+                    numOfDoujun += 1;
                 }
             }
             if (storedShuntsu.indexOf(mentsu) < 0) {
@@ -285,19 +282,10 @@ function peikousanshoku(handInfo) {
         }
     }
 
-    // if (numOfPeikou == 1) {
-    //     handInfo.yaku.push({iipeikou: 1}); //menzen
-    // }
-
-    // if (numOfPeikou == 2) {
-    //     handInfo.yaku.push({ryanpeikou: 3}); //menzen
-    // }
-
-    if (numOfSanshoku >= 3) {
+    if (numOfDoujun >= 3) {
         handInfo.yaku.push({sanshokudoujun: 2}); // fuuru -1
     }
 }
-
 
 /** 一杯口, Iipeikou, Double sequence
  *
@@ -309,3 +297,66 @@ function peikousanshoku(handInfo) {
  * Must be concealed : yes
  * Han : 3
  */
+function peikou(handInfo) {
+    var peikou = 0;
+    var winHand = handInfo.winHand;
+    for (let i=0; i<winHand.length; i++) {
+        winHand[i] = winHand[i].replace(/0/g, '5');
+    }
+
+    var countedMentsu = winHand.reduce(function (acc, cur) {
+        acc[cur] = (acc[cur] + 1) || 1;
+        return acc;
+    }, {});
+
+    for (let e in countedMentsu) {
+        if (countedMentsu[e] == 2) {
+            peikou += 1;
+        }
+    }
+
+    if (peikou == 1) {
+        handinfo.yaku.push({iipeikou: 1}); //menzen
+    }
+
+    if (peikou == 2) {
+        handinfo.yaku.push({ryanpeikou: 3}); //menzen
+    }
+}
+
+/**
+ * 一气通贯, Ikkitsuukan (/ Ikki / Ittsuu), Straight
+ *
+ * Must be concealed : no
+ * Han : 2 (concealed) / 1 (open)
+ */
+function ikki(handInfo) {
+    var ikki = false;
+    var winHand = handInfo.winHand.pop();
+    for (let i=0; i<winHand.length; i++) {
+        winHand[i] = winHand[i].replace(/0/g, '5');
+    }
+
+    var sortedMentsu = winHand.reduce(function (acc, cur) {
+        let digit = cur.match(/\d/g).join('');
+        let type  = cur.match(/[mps]/);
+        if (!acc[type]) {
+            acc[type] = [];
+        }
+        acc[type].push(digit);
+        return acc;
+    }, {});
+
+    for (let e in sortedMentsu) {
+        if (sortedMentsu[e].indexOf('123') &&
+            sortedMentsu[e].indexOf('456') &&
+            sortedMentsu[e].indexOf('789')) {
+            ikki = true;
+        }
+    }
+
+    if (ikki) {
+        handinfo.yaku.push({ikkitsuukan: 2}); //fuuru-1
+    }
+
+}

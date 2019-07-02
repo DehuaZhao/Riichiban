@@ -2,6 +2,9 @@
 
 立直麻将得点练习器
 
+**Highlight**
+- 牌张处理基于普遍认同的字符表示方法, 如[天鳳牌理](http://tenhou.net/2). m=萬子, p=筒子, s=索子, z=字牌, 0=赤.
+
 ## 1 立直麻将计分方法
 
 ### 1.1 一局的总得分
@@ -36,7 +39,7 @@
 跳満 | 6 \ 7飜 | 3000
 倍満 | 8 \ 9 \ 10飜 | 4000
 三倍満 | 11 \ 12飜 | 6000
-役満 \ 累计役満 | 役満 \ 13飜及以上 | 8000
+(累计)役満 | 13飜及以上 \ 役満| 8000
 
 ### 1.3 符
 
@@ -187,4 +190,4 @@
 一盃口 | 一杯口 | iipeikou | double sequence
 二盃口 | 二杯口 | ryanpeikou | twice double sequence
 三色同順 | 三色同顺 | sanshokudoujun | triple sequence
-
+一気通貫 | 一气通贯 | ikkitsuukan | straight

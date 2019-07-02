@@ -126,8 +126,8 @@ function authHand(hand) {
     }
 
     // check num of others
-    for (var val in tileStat) {
-        if (tileStat[val] > 4) {
+    for (let e in tileStat) {
+        if (tileStat[e] > 4) {
         return "FAIL";
        }
     }
@@ -148,7 +148,7 @@ function calFu() {
 function countNumberOfTile(tileStr) {
     var json = {};
     for (var i=0; i<2*14; i=i+2) {
-        json[tileStr.substr(i, 2)]  = (json[tileStr.substr(i, 2)] +1) || 1;
+        json[tileStr.substr(i, 2)]  = (json[tileStr.substr(i, 2)] + 1) || 1;
     };
     return json;
 };
