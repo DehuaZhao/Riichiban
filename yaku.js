@@ -392,7 +392,7 @@ function honitsu(handInfo) {
 }
 
 /**
- * 字一色, Tsuuiisou, All honors
+ * 字一色, Tsuuiisou, All honor
  *
  * Must be concealed : no
  * Han : yakuman
@@ -400,6 +400,19 @@ function honitsu(handInfo) {
 function tsuuiisou(handInfo) {
     let re = /z/g;
     if (handInfo.winHand.join('').match(re).length >= 14) {
-        handInfo.yaku.push({tsuuiisou: "yakuman"}); //fuuru-1
+        handInfo.yaku.push({tsuuiisou: "yakuman"});
+    }
+}
+
+/**
+ * 绿一色, Ryuuiisou, All green
+ *
+ * Must be concealed : no
+ * Han : yakuman
+ */
+function ryuuiisou(handInfo) {
+    let re_wo = /[^23458]s|[^6]z/g;
+    if (handInfo.winHand.join('').match(re_wo) == null) {
+        handInfo.yaku.push({ryuuiisou: "yakuman"});
     }
 }
