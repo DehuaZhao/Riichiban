@@ -195,3 +195,8 @@
 混一色 | 混一色 | honitsu | mixed flush
 字一色 | 字一色 | tsuuiisou | all honor
 緑一色 | 绿一色 | ryuuiisou | all green
+九蓮宝燈 | 九莲宝灯 | chuurenpoutou | nine gates
+対々和 | 对对和 | toitoi | all triplet
+四暗刻 | 四暗刻 | suuankou | four concealed triplets
+三色同刻 | 三色同刻 | sanshokudoukou | three colour triplets
+三暗刻 | 四暗刻 | sanankou | three concealed triplets
