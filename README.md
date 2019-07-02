@@ -191,3 +191,6 @@
 二盃口 | 二杯口 | ryanpeikou | twice double sequence
 三色同順 | 三色同顺 | sanshokudoujun | triple sequence
 一気通貫 | 一气通贯 | ikkitsuukan | straight
+清一色 | 清一色 | chinitsu | pure flush
+混一色 | 混一色 | honitsu | mixed flush
+字一色 | 字一色 | tsuuiisou | all honors

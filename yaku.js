@@ -89,7 +89,7 @@ function yakuhai(handInfo) {
  */
 function chinroutou(handInfo) {
     let re = /[19]/g;
-    if (handInfo.winHand.join('').match(re).length == 14 ) {
+    if (handInfo.winHand.join('').match(re).length >= 14) {
         handInfo.yaku.push({chinroutou: "yakuman"});
     }
 }
@@ -178,7 +178,7 @@ function chantai(handInfo) {
  */
 function shousangen(handInfo) {
     let re = /5z|6z|7z/g;
-    if (handInfo.winHand.join('').match(re).length == 8 ) {
+    if (handInfo.winHand.join('').match(re).length == 8 ) { //没考虑杠
         handInfo.yaku.push({shousangen: 2});
     }
 }
@@ -192,7 +192,7 @@ function shousangen(handInfo) {
  */
 function daisangen(handInfo) {
     let re = /5z|6z|7z/g;
-    if (handInfo.winHand.join('').match(re).length == 9 ) {
+    if (handInfo.winHand.join('').match(re).length == 9 ) { //没考虑杠
         handInfo.yaku.push({daisangen: "yakuman"});
     }
 }
@@ -206,7 +206,7 @@ function daisangen(handInfo) {
  */
 function shousuushii(handInfo) {
     let re = /1z|2z|3z|4z/g
-    if (handInfo.winHand.join('').match(re).length == 11 ) {
+    if (handInfo.winHand.join('').match(re).length == 11 ) { //没考虑杠
         handInfo.yaku.push({shousuushii: "yakuman"});
     }
 }
@@ -220,7 +220,7 @@ function shousuushii(handInfo) {
  */
 function daisuushii(handInfo) {
     let re = /1z|2z|3z|4z/g
-    if (handInfo.winHand.join('').match(re).length == 12 ) {
+    if (handInfo.winHand.join('').match(re).length == 12 ) { //没考虑杠
         handInfo.yaku.push({daisuushii: "yakuman"});
     }
 }
@@ -348,9 +348,9 @@ function ikki(handInfo) {
     }, {});
 
     for (let e in sortedMentsu) {
-        if (sortedMentsu[e].indexOf('123') &&
-            sortedMentsu[e].indexOf('456') &&
-            sortedMentsu[e].indexOf('789')) {
+        if (sortedMentsu[e].indexOf('123') >= 0 &&
+            sortedMentsu[e].indexOf('456') >= 0 &&
+            sortedMentsu[e].indexOf('789') >= 0) {
             ikki = true;
         }
     }
@@ -358,5 +358,48 @@ function ikki(handInfo) {
     if (ikki) {
         handinfo.yaku.push({ikkitsuukan: 2}); //fuuru-1
     }
+}
 
+/**
+ * 清一色, Chinitsu, Pure flush
+ *
+ * Must be concealed : no
+ * Han : 6 (concealed) / 5 (open)
+ */
+function chinitsu(handInfo) {
+    let winHand = handInfo.winHand.join('');
+    if (winHand.match(/[mpz]/g) == null ||
+        winHand.match(/[msz]/g) == null ||
+        winHand.match(/[spz]/g) == null) {
+            handInfo.yaku.push({chinitsu: 6}); //fuuru-1
+    }
+}
+
+/**
+ * 混一色, Honitsu, Mixed flush
+ *
+ * Must be concealed : no
+ * Han : 3 (concealed) / 2 (open)
+ */
+function honitsu(handInfo) {
+    let winHand = handInfo.winHand.join('');
+    if (winHand.match(/z/g) !== null && (
+        winHand.match(/[mp]/g) == null ||
+        winHand.match(/[ms]/g) == null ||
+        winHand.match(/[sp]/g) == null)) {
+        handInfo.yaku.push({honitsu: 3}); //fuuru-1
+    }
+}
+
+/**
+ * 字一色, Tsuuiisou, All honors
+ *
+ * Must be concealed : no
+ * Han : yakuman
+ */
+function tsuuiisou(handInfo) {
+    let re = /z/g;
+    if (handInfo.winHand.join('').match(re).length >= 14) {
+        handInfo.yaku.push({tsuuiisou: "yakuman"}); //fuuru-1
+    }
 }
