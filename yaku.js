@@ -525,12 +525,13 @@ function sanshokudoukou(handInfo) {
  */
 function sanankou(handInfo) {
     let sanankou = false;
+
     let winHand = handInfo.winHand;
     for (let i=0; i<winHand.length; i++) {
         winHand[i] = winHand[i].replace(/0/g, '5');
     }
 
-    if (handInfo.fuuroAt.length < 2) {
+    if (handInfo.fuuroAt != null && handInfo.fuuroAt.length < 2) {
         let storedKoutsu = winHand.reduce(function (acc, cur, ind) {
             let digit = cur.match(/\d/g);
             if (digit[0] == digit[2]) {
@@ -540,7 +541,8 @@ function sanankou(handInfo) {
         }, {});
 
         for (let e in storedKoutsu) {
-            if (handInfo.fuuroAt.indexOf(parseInt(e)) >= 0) {
+            if (Object.keys(storedKoutsu).length < 3 ||
+                handInfo.fuuroAt.indexOf(parseInt(e)) >= 0) {
                 sanankou = false;
                 break;
             }
