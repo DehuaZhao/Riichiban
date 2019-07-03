@@ -78,7 +78,7 @@ function yakuhai(handInfo) {
 function chinroutou(handInfo) {
     let re = /[19]/g;
     let digit = handInfo.winHand.join('').match(re);
-    if (digit !== null && digit >= 14) {
+    if (digit !== null && digit.length >= 14) {
         handInfo.yaku.push({chinroutou: "yakuman"});
     }
 }
@@ -144,6 +144,7 @@ function chantai(handInfo) {
             if (handInfo.winHand[i].match(re1) == null) {
                 if (handInfo.winHand[i].match(rez) == null) {
                     chantai = false;
+                    break;
                 } else {
                     chantai = true;
                 }
@@ -325,7 +326,7 @@ function peikou(handInfo) {
  */
 function ikki(handInfo) {
     let ikki = false;
-    let winHand = handInfo.winHand.pop();
+    let winHand = handInfo.winHand;
     for (let i=0; i<winHand.length; i++) {
         winHand[i] = winHand[i].replace(/0/g, '5');
     }
@@ -392,7 +393,8 @@ function honitsu(handInfo) {
  */
 function tsuuiisou(handInfo) {
     let re = /z/g;
-    if (handInfo.winHand.join('').match(re).length >= 14) {
+    let digit = handInfo.winHand.join('').match(re);
+    if (digit !== null && digit.length >= 14) {
         handInfo.yaku.push({tsuuiisou: "yakuman"});
     }
 }
@@ -495,7 +497,7 @@ function suuankou(handInfo) {
  * Han : 2
  */
 function sanshokudoukou(handInfo) {
-    let winHand = handInfo.winHand.pop();
+    let winHand = handInfo.winHand;
     for (let i=0; i<winHand.length; i++) {
         winHand[i] = winHand[i].replace(/0/g, '5');
     }
@@ -513,7 +515,6 @@ function sanshokudoukou(handInfo) {
         storedKoutsu["p"] == storedKoutsu["s"]) {
         handInfo.yaku.push({sanshokudoukou: 2});
     }
-
 }
 
 /**
@@ -524,7 +525,7 @@ function sanshokudoukou(handInfo) {
  */
 function sanankou(handInfo) {
     let sanankou = false;
-    let winHand = handInfo.winHand.pop();
+    let winHand = handInfo.winHand;
     for (let i=0; i<winHand.length; i++) {
         winHand[i] = winHand[i].replace(/0/g, '5');
     }
@@ -539,7 +540,7 @@ function sanankou(handInfo) {
         }, {});
 
         for (let e in storedKoutsu) {
-            if ((e in handInfo.fuuroAt)) {
+            if (handInfo.fuuroAt.indexOf(parseInt(e)) >= 0) {
                 sanankou = false;
                 break;
             }
