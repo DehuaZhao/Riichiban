@@ -1,15 +1,3 @@
-let handInfo = {
-    bakaze: "1z",
-    honba: 2,
-    jikaze: "2z",
-    riichibou: 2,
-    winHand: ["1s2s3s", "5z5z5z", "4p4p4p", "1z1z1z", "4s4s"],
-    winTile: [3, 2],
-    yaku: [],
-}
-
-const sangen = ['5z', '6z', '7z'];
-
 /**
  * 门前清自摸和, Menzen(chin) tsumo, All concealed
  *
@@ -30,7 +18,7 @@ function menzentsumo(handInfo) {
  * Must be concealed : yes
  * Han : 1
  */
-function menzentsumo(handInfo) {
+function riichi(handInfo) {
     if (handInfo.riichi) {
         handInfo.yaku.push({riichi: 1});
     }
@@ -68,14 +56,14 @@ function yakuhai(handInfo) {
     let re2 = new RegExp("(" + handInfo.bakaze + "){3}", "g");
     let yaku_bakaze = handInfo.winHand.join('').match(re2);
     for (let e in yaku_bakaze) {
-        let bakazeName = "yakuhai: " + yakuhai[e];
+        let bakazeName = "yakuhai: " + yaku_bakaze[e];
         handInfo.yaku.push({[bakazeName]: 1});
     }
 
     let re3 = new RegExp("(" + handInfo.jikaze + "){3}", "g");
     let yaku_jikaze = handInfo.winHand.join('').match(re3);
     for (let e in yaku_jikaze) {
-        let jikazeName = "yakuhai: " + yakuhai[e];
+        let jikazeName = "yakuhai: " + yaku_jikaze[e];
         handInfo.yaku.push({[jikazeName]: 1});
     }
 }
@@ -89,7 +77,8 @@ function yakuhai(handInfo) {
  */
 function chinroutou(handInfo) {
     let re = /[19]/g;
-    if (handInfo.winHand.join('').match(re).length >= 14) {
+    let digit = handInfo.winHand.join('').match(re);
+    if (digit !== null && digit >= 14) {
         handInfo.yaku.push({chinroutou: "yakuman"});
     }
 }
@@ -178,7 +167,8 @@ function chantai(handInfo) {
  */
 function shousangen(handInfo) {
     let re = /5z|6z|7z/g;
-    if (handInfo.winHand.join('').match(re).length == 8 ) { //没考虑杠
+    let digit = handInfo.winHand.join('').match(re);
+    if (digit !== null && digit.length == 8 ) { //没考虑杠
         handInfo.yaku.push({shousangen: 2});
     }
 }
@@ -192,7 +182,8 @@ function shousangen(handInfo) {
  */
 function daisangen(handInfo) {
     let re = /5z|6z|7z/g;
-    if (handInfo.winHand.join('').match(re).length == 9 ) { //没考虑杠
+    let digit = handInfo.winHand.join('').match(re);
+    if (digit !== null && digit.length == 9 ) { //没考虑杠
         handInfo.yaku.push({daisangen: "yakuman"});
     }
 }
@@ -205,8 +196,9 @@ function daisangen(handInfo) {
  * Han : yakuman
  */
 function shousuushii(handInfo) {
-    let re = /1z|2z|3z|4z/g
-    if (handInfo.winHand.join('').match(re).length == 11 ) { //没考虑杠
+    let re = /1z|2z|3z|4z/g;
+    let digit = handInfo.winHand.join('').match(re);
+    if (digit !== null && digit.length == 11 ) { //没考虑杠
         handInfo.yaku.push({shousuushii: "yakuman"});
     }
 }
@@ -219,8 +211,9 @@ function shousuushii(handInfo) {
  * Han : yakuman
  */
 function daisuushii(handInfo) {
-    let re = /1z|2z|3z|4z/g
-    if (handInfo.winHand.join('').match(re).length == 12 ) { //没考虑杠
+    let re = /1z|2z|3z|4z/g;
+    let digit = handInfo.winHand.join('').match(re);
+    if (digit !== null && digit.length == 12 ) { //没考虑杠
         handInfo.yaku.push({daisuushii: "yakuman"});
     }
 }
@@ -529,7 +522,7 @@ function sanshokudoukou(handInfo) {
  * Must be concealed : no
  * Han : 2
  */
-function Sanankou(handInfo) {
+function sanankou(handInfo) {
     let sanankou = false;
     let winHand = handInfo.winHand.pop();
     for (let i=0; i<winHand.length; i++) {
