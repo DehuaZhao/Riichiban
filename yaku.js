@@ -406,7 +406,7 @@ function tsuuiisou(handInfo) {
  * Han : yakuman
  */
 function ryuuiisou(handInfo) {
-    let re_wo = /[^23468]s|[^6]z/g;
+    let re_wo = /[^23468]s|[^6]z|\dm|\dp/g;
     if (handInfo.winHand.join('').match(re_wo) == null) {
         handInfo.yaku.push({ryuuiisou: "yakuman"});
     }
@@ -431,7 +431,7 @@ function chuurenpoutou(handInfo) {
         winHand.join('').match(/[msz]/g) == null ||
         winHand.join('').match(/[spz]/g) == null) {
         for (let i=1; i<10; i++) {
-            if (base.concat(i.toString()).sort() == digit) {
+            if (base.concat(i.toString()).split('').sort().join('') == digit) {
                 huurenpoutou = true;
                 break;
             }
@@ -505,17 +505,21 @@ function sanshokudoukou(handInfo) {
     let storedKoutsu = winHand.reduce(function (acc, cur) {
         let digit = cur.match(/\d/g);
         let type  = cur.match(/[mps]/);
-        if (digit[0] == digit[2]) {
+        if (type !== null && digit[0] == digit[2]) {
             acc[type] = digit.join('');
         }
         return acc;
     }, {});
 
-    if (storedKoutsu["m"] == storedKoutsu["p"] &&
+    if (storedKoutsu.hasOwnProperty("m") &&
+        storedKoutsu.hasOwnProperty("p") &&
+        storedKoutsu.hasOwnProperty("s") &&
+        storedKoutsu["m"] == storedKoutsu["p"] &&
         storedKoutsu["p"] == storedKoutsu["s"]) {
         handInfo.yaku.push({sanshokudoukou: 2});
     }
 }
+// bug case ["2s2s2s","2m2m2m","2p2p2p","5s5s5s","7m7m"]
 
 /**
  * 三暗刻, Sanankou, Three concealed triplets
@@ -523,34 +527,34 @@ function sanshokudoukou(handInfo) {
  * Must be concealed : no
  * Han : 2
  */
-function sanankou(handInfo) {
-    let sanankou = false;
+// function sanankou(handInfo) {
+//     let sanankou = false;
 
-    let winHand = handInfo.winHand;
-    for (let i=0; i<winHand.length; i++) {
-        winHand[i] = winHand[i].replace(/0/g, '5');
-    }
+//     let winHand = handInfo.winHand;
+//     for (let i=0; i<winHand.length; i++) {
+//         winHand[i] = winHand[i].replace(/0/g, '5');
+//     }
 
-    if (handInfo.fuuroAt != null && handInfo.fuuroAt.length < 2) {
-        let storedKoutsu = winHand.reduce(function (acc, cur, ind) {
-            let digit = cur.match(/\d/g);
-            if (digit[0] == digit[2]) {
-                acc[ind] = cur;
-            }
-            return acc;
-        }, {});
+//     if (handInfo.fuuroAt !== null && handInfo.fuuroAt.length < 2) {
+//         let storedKoutsu = winHand.reduce(function (acc, cur, ind) {
+//             let digit = cur.match(/\d/g);
+//             if (digit[0] == digit[2]) {
+//                 acc[ind] = cur;
+//             }
+//             return acc;
+//         }, {});
 
-        for (let e in storedKoutsu) {
-            if (Object.keys(storedKoutsu).length < 3 ||
-                handInfo.fuuroAt.indexOf(parseInt(e)) >= 0) {
-                sanankou = false;
-                break;
-            }
-            sanankou = true;
-        }
-    }
+//         for (let e in storedKoutsu) {
+//             if (Object.keys(storedKoutsu).length < 3 ||
+//                 handInfo.fuuroAt.indexOf(parseInt(e)) >= 0) {
+//                 sanankou = false;
+//                 break;
+//             }
+//             sanankou = true;
+//         }
+//     }
 
-    if (sanankou) {
-        handInfo.yaku.push({sanankou: 2});
-    }
-}
+//     if (sanankou) {
+//         handInfo.yaku.push({sanankou: 2});
+//     }
+// }
