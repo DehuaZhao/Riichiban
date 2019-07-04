@@ -5,12 +5,13 @@ function start() {
         honba: genRan(0, 5),   // 几本场
         riichibou: genRan(0, 2), // 立直棒个数
         winHand: genWinHand(), // 赢牌手牌
-        // winHand: ["2s2s2s","2m2m2m","2p2p2p","5s5s5s","7m7m"],
+        // winHand: ["3p4p5p","1p1p1p","4m5m6m","6m7m8m","5p5p"],
         winTile: genWinTile(), // 和张
-        yaku: [],
-        menzen: true, // 是否门清, 先假设门清为true, 检查一番束和门清nomi
+        menzen: true, // 门清, 先假设门清为true, 检查一番束和门清nomi
         tsumo: false,
         riichi: false,
+        yaku: [],
+        yakuman: [],
         // doras:
     };
 
@@ -18,24 +19,25 @@ function start() {
     console.log(JSON.stringify(handInfo));
     console.log("*********")
 
-
-
     // 只传递了手牌编码过去, 其他都未包含
     let winHandTiles = handInfo.winHand; // e.g. ["4s4s4s", "3m3m3m", "0m6m7m", "6p7p8p", "9p9p"]
     let winHandJson = [];
     for (let j=0; j < 2*14; j = j+2) {
-        winHandJson.push(JSON.parse('{"tileCode": ' + '"' + winHandTiles.join('').substr(j, 2) + '"}'));
+        winHandJson.push(JSON.parse(
+            '{"tileCode": ' + '"' + winHandTiles.join('').substr(j, 2) + '"}'
+        ));
     }
 
     return winHandJson;
 }
 
+// 随机场\自风
 function genKaze(kazeType) {
     let maxKaze = kazeType == "Ba" ? 1 : kaze.length -1;
-
     return kaze[genRan(0, maxKaze)];
 }
 
+// 生成手牌
 function genWinHand() {
     do {
         var hand = [];
@@ -49,18 +51,21 @@ function genWinHand() {
     return hand;
 }
 
+// 生成和张
 function genWinTile() {
     let winOn = genRan(0, 4); // 在哪一组面子或雀头上赢牌
-    let winAt = (winOn != 4) ? genRan(0, 2) : genRan(0, 1); //赢哪张牌
+    let winAt = (winOn != 4) ? genRan(0, 2) : 0; //赢哪张牌
 
     return [winOn, winAt];
 }
 
+// 生成朵拉
 function genDora() {
     //let dora = genRan()
     //return
 };
 
+// 生成副露数位置
 function genFuuro() {
     let fuuroAt = [];
     let ran;
@@ -77,10 +82,11 @@ function genFuuro() {
     return fuuroAt;
 };
 
+// 计算手牌点数
 function calPoint(handInfo) {
     runYaku(handInfo);
-    console.log("预算:"+JSON.stringify(handInfo.yaku));
     let preYaku = handInfo.yaku
+    console.log("预算:"+JSON.stringify(preYaku));
     console.log("*********")
 
     if (preYaku.length > 0) {
@@ -111,17 +117,16 @@ function calPoint(handInfo) {
     handInfo.menzen = !handInfo.fuuro;
 
     // let doraNum = countDora(handInfo.winHand);
-    handInfo.yaku = []; //清空预算役
     runYaku(handInfo);
     console.log("真实役:"+JSON.stringify(handInfo.yaku));
     console.log("*********")
 
-    let fu = calFu(handInfo);
-    handInfo.fu = fu;
-    // return calPoint(yaku, fu, handInfo);
+    handInfo.fu = calFu(handInfo);
+
+    return calTotalPoint(handInfo);
 }
 
-// 检查tile是否合法，0s不能重复，5s不能同时出现超过3个，其余不能同时出现超过4个.
+// 检查tile是否合法
 function authHand(hand) {
     let handStr = hand.join("");
     let tileStat = countNumberOfTile(handStr);
@@ -188,6 +193,7 @@ function menzennomi(preYaku) {
             return true;
         }
     }
+    console.log("menzennomi " + false)
     return false;
 }
 

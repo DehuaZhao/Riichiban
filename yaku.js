@@ -79,7 +79,7 @@ function chinroutou(handInfo) {
     let re = /[19]/g;
     let digit = handInfo.winHand.join('').match(re);
     if (digit !== null && digit.length >= 14) {
-        handInfo.yaku.push({chinroutou: "yakuman"});
+        handInfo.yakuman.push({chinroutou: "yakuman"});
     }
 }
 
@@ -185,7 +185,7 @@ function daisangen(handInfo) {
     let re = /5z|6z|7z/g;
     let digit = handInfo.winHand.join('').match(re);
     if (digit !== null && digit.length == 9 ) { //没考虑杠
-        handInfo.yaku.push({daisangen: "yakuman"});
+        handInfo.yakuman.push({daisangen: "yakuman"});
     }
 }
 
@@ -200,7 +200,7 @@ function shousuushii(handInfo) {
     let re = /1z|2z|3z|4z/g;
     let digit = handInfo.winHand.join('').match(re);
     if (digit !== null && digit.length == 11 ) { //没考虑杠
-        handInfo.yaku.push({shousuushii: "yakuman"});
+        handInfo.yakuman.push({shousuushii: "yakuman"});
     }
 }
 
@@ -215,7 +215,7 @@ function daisuushii(handInfo) {
     let re = /1z|2z|3z|4z/g;
     let digit = handInfo.winHand.join('').match(re);
     if (digit !== null && digit.length == 12 ) { //没考虑杠
-        handInfo.yaku.push({daisuushii: "yakuman"});
+        handInfo.yakuman.push({daisuushii: "yakuman"});
     }
 }
 
@@ -396,7 +396,7 @@ function tsuuiisou(handInfo) {
     let re = /z/g;
     let digit = handInfo.winHand.join('').match(re);
     if (digit !== null && digit.length >= 14) {
-        handInfo.yaku.push({tsuuiisou: "yakuman"});
+        handInfo.yakuman.push({tsuuiisou: "yakuman"});
     }
 }
 
@@ -409,7 +409,7 @@ function tsuuiisou(handInfo) {
 function ryuuiisou(handInfo) {
     let re_wo = /[^23468]s|[^6]z|\dm|\dp/g;
     if (handInfo.winHand.join('').match(re_wo) == null) {
-        handInfo.yaku.push({ryuuiisou: "yakuman"});
+        handInfo.yakuman.push({ryuuiisou: "yakuman"});
     }
 }
 
@@ -441,7 +441,7 @@ function chuurenpoutou(handInfo) {
     }
 
     if (huurenpoutou) {
-        handInfo.yaku.push({chuurenpoutou: "yakuman"}); // menzen
+        handInfo.yakuman.push({chuurenpoutou: "yakuman"}); // menzen
     }
 }
 
@@ -487,7 +487,7 @@ function suuankou(handInfo) {
     }
 
     if (toitoi && handInfo.menzen) {
-        handInfo.yaku.push({suuankou: "yakuman"});
+        handInfo.yakuman.push({suuankou: "yakuman"});
     }
 }
 
