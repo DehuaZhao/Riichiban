@@ -76,7 +76,7 @@
       <td colspan="3">2</td>
    </tr>
    <tr>
-      <td>自摸</td>
+      <td>非平和自摸</td>
       <td colspan="3">2</td>
    </tr>
    <tr>

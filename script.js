@@ -80,11 +80,13 @@ function genFuuro() {
 function calPoint(handInfo) {
     runYaku(handInfo);
     console.log("预算:"+JSON.stringify(handInfo.yaku));
+    let preYaku = handInfo.yaku
     console.log("*********")
 
-    if (handInfo.yaku.length > 0) {
-        if (menzennomi(handInfo)) {
+    if (preYaku.length > 0) {
+        if (menzennomi(preYaku)) {
             handInfo.fuuro = false;
+            handInfo.fuuroAt = [];
             handInfo.riichi = genRan(0, 1);
             handInfo.tsumo = genRan(0, 1);
         }
@@ -94,11 +96,14 @@ function calPoint(handInfo) {
             handInfo.tsumo = genRan(0, 1);
             if (handInfo.fuuro) {
                 handInfo.fuuroAt = genFuuro();
+            } else {
+                handInfo.fuuroAt = [];
             }
         }
     }
     else {
         handInfo.fuuro = false;
+        handInfo.fuuroAt = [];
         handInfo.riichi = genRan(0,1);
         handInfo.tsumo = handInfo.riichi ? genRan(0,1) : true;
     }
@@ -111,7 +116,8 @@ function calPoint(handInfo) {
     console.log("真实役:"+JSON.stringify(handInfo.yaku));
     console.log("*********")
 
-    // let fu = calFu(handInfo.winHand, handInfo.winTile, fuuro, whichFuuro, yaku);
+    let fu = calFu(handInfo);
+    handInfo.fu = fu;
     // return calPoint(yaku, fu, handInfo);
 }
 
@@ -172,22 +178,18 @@ function runYaku(handInfo) {
 };
 
 // 是否有门清限定 ture/false
-function menzennomi(handInfo) {
+function menzennomi(preYaku) {
     // 只有一翻 而且该翻是门清nomi的
     let menzennomi = ["pinfu", "iipeikou", "ryanpeikou"];
-    if (handInfo.yaku.length == 1) {
-        let yakuName = Object.keys(handInfo.yaku[0]);
-        if (menzennomi.indexOf(yakuName) >= 0) {
+    if (preYaku.length == 1) {
+        let yakuName = Object.keys(preYaku[0]);
+        if (menzennomi.indexOf(yakuName[0]) >= 0) {
+            console.log("menzennomi " + true)
             return true;
         }
     }
     return false;
 }
-
-// 符
-function calFu() {
-
-};
 
 function countNumberOfTile(tileStr) {
     var json = {};

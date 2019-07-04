@@ -49,21 +49,21 @@ function yakuhai(handInfo) {
     let re1 = new RegExp("(" + sangen.join('|') + "){3}", "g");
     let yaku_sangen = handInfo.winHand.join('').match(re1);
     for (let e in yaku_sangen) {
-        let sangenName = "yakuhai: " + yaku_sangen[e];
+        let sangenName = "yakuhai: " + yaku_sangen[e].substr(0,2);
         handInfo.yaku.push({[sangenName]: 1});
     }
 
     let re2 = new RegExp("(" + handInfo.bakaze + "){3}", "g");
     let yaku_bakaze = handInfo.winHand.join('').match(re2);
     for (let e in yaku_bakaze) {
-        let bakazeName = "yakuhai: " + yaku_bakaze[e];
+        let bakazeName = "yakuhai: " + yaku_bakaze[e].substr(0,2);
         handInfo.yaku.push({[bakazeName]: 1});
     }
 
     let re3 = new RegExp("(" + handInfo.jikaze + "){3}", "g");
     let yaku_jikaze = handInfo.winHand.join('').match(re3);
     for (let e in yaku_jikaze) {
-        let jikazeName = "yakuhai: " + yaku_jikaze[e];
+        let jikazeName = "yakuhai: " + yaku_jikaze[e].substr(0,2);
         handInfo.yaku.push({[jikazeName]: 1});
     }
 }
@@ -227,10 +227,10 @@ function daisuushii(handInfo) {
  */
 function pinfu(handInfo) {
     let yakuhai = sangen.concat(handInfo.bakaze, handInfo.jikaze);
-    let re_wo = new RegExp(yakuhai.join('|'), "g");
+    let re_yaku = new RegExp(yakuhai.join('|'), "g");
     let pinfu = false;
 
-    if (handInfo.winHand.join('').match(re_wo) == null && handInfo.menzen == true) {
+    if (handInfo.winHand.join('').match(re_yaku) == null && handInfo.menzen == true) {
         for (let i=0; i<4; i++) {
             let digit = handInfo.winHand[i].match(/\d/g);
             if (digit[0] == digit[2]) {
@@ -331,6 +331,7 @@ function ikki(handInfo) {
         winHand[i] = winHand[i].replace(/0/g, '5');
     }
 
+    // 按花色对面子分类
     let sortedMentsu = winHand.reduce(function (acc, cur) {
         let digit = cur.match(/\d/g).join('');
         let type  = cur.match(/[mps]/);
