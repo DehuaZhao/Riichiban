@@ -29,9 +29,9 @@ function start() {
         ));
     }
 
-    // handInfo.totalPoint = totalPoint;
-    // handInfo.winHandJson = winHandJson;
-    return winHandJson;
+    handInfo.totalPoint = totalPoint;
+    handInfo.winHandJson = winHandJson;
+    return handInfo;
 }
 
 // 随机场\自风
