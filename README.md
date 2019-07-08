@@ -11,7 +11,7 @@
 
 一局的总得分 = 手牌得点 + 立直棒 + 本场棒
 
-其中，手牌得点为场上所有玩家需要支付点数P的和.
+其中，手牌得点为场上未赢牌玩家需要支付点数P的和. 自摸和牌其余三家均需支付, 荣和由放铳玩家支付.
 
 本应用以[天鳳规则](http://tenhou.net/man)计算.
 
@@ -128,20 +128,19 @@
 役 | 役 | yaku
 符 | 符 | fu
 符底 | 符底 | fuutei
-チー | 吃 | chii
-ポン | 碰 | pon
-カン | 杠 | kan
-刻 | 刻 | kou
 ドラ | 悬赏 / 朵拉 | dora
 赤ドラ | 赤牌 | akadora | red rora
 満貫 | 满贯 | mangan
-二盃口 | 两杯口 | ryanpeikou
-七対子| 七对子 | chiitoitsu
 ツモ | 自摸 | tsumo | self-draw win
 ロン | 荣 | ron | discard win
 副露 | 副露 | fuuro | opened hand / call
 門前 | 门清 | menzen | concealed hand
+チー | 吃 | chii
+ポン | 碰 | pon
+カン | 杠 | kan
+刻 | 刻 | kou
 面子 | 面子 | mentsu
+雀頭 | 雀头 | jantou
 明刻 | 明刻 | minkou | open triplet
 暗刻 | 暗刻 | ankou | closed triplet
 明槓 | 明槓 | minkan | open set
@@ -160,7 +159,6 @@
 客風 | 客风 | otakaze
 本場 | 本场 | honba
 点棒 | 点棒 | tenbou | point stick
-雀頭 | 雀头 | jantou
 数牌 | 数牌 | suupai | suit tile
 萬子 | 万 | manzu | crak tile
 筒子 | 筒| pinzu | dot tile
@@ -171,9 +169,9 @@
 西 | 西 | shaa | west
 北 | 北 | pei | north
 三元牌 | 三元牌 | sangenpai | dragon tile
+白 | 白 | haku | white dragon
 發 | 发 | hatsu | green dragon
 中 | 中 | chun | red dragon
-白 | 白 | haku | white dragon
  | | |
 門前清自摸和 | 门清自摸和 | menzenchintsumo | Self-pick
 断幺九 | 断幺九 | tanyaochuu | all simples
@@ -198,5 +196,7 @@
 九蓮宝燈 | 九莲宝灯 | chuurenpoutou | nine gates
 対々和 | 对对和 | toitoi | all triplet
 四暗刻 | 四暗刻 | suuankou | four concealed triplets
+三暗刻 | 三暗刻 | sanankou | three concealed triplets
 三色同刻 | 三色同刻 | sanshokudoukou | three colour triplets
-三暗刻 | 四暗刻 | sanankou | three concealed triplets
+七対子 | 七对子 | chiitoitsu | seven pairs
+国士無双 | 国士无双 | kokushimusou | thirteen orphans

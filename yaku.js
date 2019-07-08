@@ -299,7 +299,7 @@ function peikou(handInfo) {
     }
 
     let countedMentsu = winHand.reduce(function (acc, cur) {
-        acc[cur] = (acc[cur] + 1) || 1;
+        acc[cur] = (acc[cur] + 1) || 1; // (undefined + 1 || 1) 结果为1
         return acc;
     }, {});
 
@@ -335,7 +335,7 @@ function ikki(handInfo) {
     let sortedMentsu = winHand.reduce(function (acc, cur) {
         let digit = cur.match(/\d/g).join('');
         let type  = cur.match(/[mps]/);
-        if (!acc[type]) {
+        if (!acc[type]) { // !undefined 结果为true
             acc[type] = [];
         }
         acc[type].push(digit);
@@ -420,7 +420,7 @@ function ryuuiisou(handInfo) {
  * Han : yakuman
  */
 function chuurenpoutou(handInfo) {
-    let huurenpoutou = false;
+    let chuurenpoutou = false;
     let base = "1112345678999";
     let winHand = handInfo.winHand;
     for (let i=0; i<winHand.length; i++) {
@@ -433,14 +433,14 @@ function chuurenpoutou(handInfo) {
         winHand.join('').match(/[spz]/g) == null) {
         for (let i=1; i<10; i++) {
             if (base.concat(i.toString()).split('').sort().join('') == digit) {
-                huurenpoutou = true;
+                chuurenpoutou = true;
                 break;
             }
-            huurenpoutou = false;
+            chuurenpoutou = false;
         }
     }
 
-    if (huurenpoutou) {
+    if (chuurenpoutou) {
         handInfo.yakuman.push({chuurenpoutou: "yakuman"}); // menzen
     }
 }
@@ -553,3 +553,57 @@ function sanshokudoukou(handInfo) {
 //         handInfo.yaku.push({sanankou: 2});
 //     }
 // }
+
+/**
+ * 特殊和形: 七对子, 国士无双
+ *
+ * 特殊和形为直接生成, 不通过四面子一雀头随机选取, 因此翻种则直接给出, 不需要进行判断.
+ * 这里仍补充检验函数, 仅作为参考.
+ */
+
+/**
+ * 七对子, Chiitoitsu, Seven pairs
+ *
+ * Must be concealed : yes
+ * Han : 2
+ * Fu : 25
+ */
+function chiitoitsu(handInfo) {
+    let winHand = handInfo.winHand.join('').replace(/0/g, '5').match(/\d[mpsz]/g).sort();
+
+    // 按牌张分类, value为出现个数
+    let countedTiles = winHand.reduce(function (acc, cur) {
+        acc[cur] = (acc[cur] + 1) || 1; // (undefined + 1 || 1) 结果为1
+        return acc;
+    }, {});
+
+    // 但是不能为两杯口 pending
+    if (Object.values(countedTiles).join('') == '2222222') { // 分类过的牌张value为7个2
+        handInfo.yaku.push({chiitoitsu: 2});
+    }
+}
+
+/**
+ * 国士无双, Kokushi musou, Thirteen orphans
+ *
+ * Must be concealed : yes
+ * Han : yakuman
+ */
+
+function kokushimusou(handInfo) {
+    let kokushimusou = false;
+    let base = ["1m","9m","1p","9p","1s","9s","1z","2z","3z","4z","5z","6z","7z"];
+    let tiles = handInfo.winHand.join('').match(/\d[mpsz]/g).sort();
+
+    for (let i=0; i<14; i++) {
+        if (base.concat(base[i]).sort().join('') == tiles.join('')) {
+            kokushimusou = true;
+            break;
+        }
+        kokushimusou = false;
+    }
+
+    if (kokushimusou) {
+        handInfo.yakuman.push({kokushimusou: "yakuman"});
+    }
+}
