@@ -4,8 +4,8 @@ function start() {
         jikaze: genKaze("Ji"), // 自风
         honba: genRan(0, 5),   // 几本场
         riichibou: genRan(0, 2), // 立直棒个数
-        winHand: genWinHand(), // 赢牌手牌
-        // winHand: ["3p4p5p","1p1p1p","4m5m6m","6m7m8m","5p5p"],
+        //winHand: genWinHand(), // 赢牌手牌
+        winHand: ["3s3s3s","4m5m6m","5p5p5p","6z6z6z","3m3m"],
         winTile: genWinTile(), // 和张 pending:暂未和副露关联
         menzen: true, // 门清, 先假设门清为true, 检查一番束和门清nomi
         tsumo: false,
@@ -16,7 +16,7 @@ function start() {
     };
 
     let totalPoint = calPoint(handInfo); // 计算目前手牌翻
-    console.log("point", totalPoint)
+    console.log("总分", totalPoint)
     console.log(JSON.stringify(handInfo));
     console.log("*********")
 
@@ -88,7 +88,7 @@ function genFuuro() {
 // 计算手牌点数
 function calPoint(handInfo) {
     runYaku(handInfo);
-    let preYaku = handInfo.yaku
+    let preYaku = handInfo.yaku;
     console.log("预算:"+JSON.stringify(preYaku));
     console.log("*********")
 
@@ -118,15 +118,19 @@ function calPoint(handInfo) {
     }
 
     handInfo.menzen = !handInfo.fuuro;
+    handInfo.riichibou += handInfo.riichi; // 有立直的话立直棒至少为1
 
     // let doraNum = countDora(handInfo.winHand);
+    handInfo.yaku = []; //清空预算役
     runYaku(handInfo);
     console.log("真实役:"+JSON.stringify(handInfo.yaku));
     console.log("*********")
 
     handInfo.fu = calFu(handInfo);
 
-    return calTotalPoint(handInfo);
+    let totalPoint = calTotalPoint(handInfo);
+
+    return totalPoint;
 }
 
 // 检查tile是否合法
@@ -290,6 +294,8 @@ function calTotalPoint(handInfo) {
             return acc;
         }, 0)
 
+        console.log(han, fu)
+
         if (han >= 13) { // 累积役满
             point = handInfo.jikaze == '1z' ? 48000 : 32000;
         } else if (han >= 11) { // 三倍满
@@ -303,6 +309,7 @@ function calTotalPoint(handInfo) {
                    han == 3 && fu >= 70) { // 满贯
             point = handInfo.jikaze == '1z' ? 12000 : 8000;
         } else {
+            alpha = fu * Math.pow(2, han + 2);
             if (handInfo.jikaze == '1z') {
                 if (handInfo.tsumo) {
                     beta = 2;
@@ -324,5 +331,6 @@ function calTotalPoint(handInfo) {
         }
     } // end non-yakuman
 
+    console.log("得点" + point)
     return point + handInfo.honba * 300 + handInfo.riichibou * 1000;
 }

@@ -500,7 +500,7 @@ function suuankou(handInfo) {
 function sanshokudoukou(handInfo) {
     let winHand = handInfo.winHand;
 
-    let numOfDoukou = winHand.reduce(function (acc, cur) {
+    let storedDoukou = winHand.reduce(function (acc, cur) {
         let digit = cur.match(/\d/g);
         let type  = cur.match(/[mps]/);
         if (type !== null && digit[0] == digit[2]) {
@@ -511,11 +511,10 @@ function sanshokudoukou(handInfo) {
         return acc;
     }, []);
 
-    if (numOfDoukou.length == 3) {
+    if (storedDoukou.length == 3) {
         handInfo.yaku.push({sanshokudoukou: 2});
     }
 }
-// bug case ["2s2s2s","2m2m2m","2p2p2p","5s5s5s","7m7m"]
 
 /**
  * 三暗刻, Sanankou, Three concealed triplets
