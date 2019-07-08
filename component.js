@@ -20,11 +20,11 @@ var winHand = new Vue({
 var changkuang = new Vue({
     el: '#changkuang',
     data: {
-        roundwind: init.winHand.bakaze + "局",
-        selfwind: init.winHand.jikaze + "家",
+        roundwind: kazekanji[+init.winHand.bakaze.substr(0,1) - 1] + "局",
+        selfwind: kazekanji[+init.winHand.jikaze.substr(0,1) - 1] + "家",
         tsumoron: init.winHand.tsumo ? "自摸" : "荣和",
-        richibang: "立直棒" + init.winHand.riichi,
-        honba: "本场棒" + init.winHand.honba,
+        richibang: "立直棒x" + init.winHand.riichibou,
+        honba: "本场棒x" + init.winHand.honba,
     }
 });
 
