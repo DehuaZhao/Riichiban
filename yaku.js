@@ -499,24 +499,19 @@ function suuankou(handInfo) {
  */
 function sanshokudoukou(handInfo) {
     let winHand = handInfo.winHand;
-    for (let i=0; i<winHand.length; i++) {
-        winHand[i] = winHand[i].replace(/0/g, '5');
-    }
 
-    let storedKoutsu = winHand.reduce(function (acc, cur) {
+    let numOfDoukou = winHand.reduce(function (acc, cur) {
         let digit = cur.match(/\d/g);
         let type  = cur.match(/[mps]/);
         if (type !== null && digit[0] == digit[2]) {
-            acc[type] = digit.join('');
+            if (acc.length == 0 || acc.indexOf(digit.join('')) >= 0) {
+                acc.push(digit.join(''));
+            }
         }
         return acc;
-    }, {});
+    }, []);
 
-    if (storedKoutsu.hasOwnProperty("m") &&
-        storedKoutsu.hasOwnProperty("p") &&
-        storedKoutsu.hasOwnProperty("s") &&
-        storedKoutsu["m"] == storedKoutsu["p"] &&
-        storedKoutsu["p"] == storedKoutsu["s"]) {
+    if (numOfDoukou.length == 3) {
         handInfo.yaku.push({sanshokudoukou: 2});
     }
 }

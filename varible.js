@@ -40,3 +40,5 @@ const kaze   = ['1z', '2z', '3z', '4z'];
 const sangen = ['5z', '6z', '7z'];
 
 const allTiles = man.concat(pin, suo, kaze, sangen);
+
+const kazekanji = ["東", "南", "西", "北"];
