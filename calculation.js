@@ -4,8 +4,8 @@ function start() {
         jikaze: genKaze("Ji"), // 自风
         honba: genRan(0, 5),   // 几本场
         riichibou: genRan(0, 2), // 立直棒个数
-        //winHand: genWinHand(), // 赢牌手牌
-        winHand: ["3s3s3s","4m5m6m","5p5p5p","6z6z6z","3m3m"],
+        winHand: genWinHand(), // 赢牌手牌
+        // winHand: ["3s3s3s","4m5m6m","5p5p5p","6z6z6z","3m3m"],
         winTile: genWinTile(), // 和张 pending:暂未和副露关联
         menzen: true, // 门清, 先假设门清为true, 检查一番束和门清nomi
         tsumo: false,
@@ -20,17 +20,7 @@ function start() {
     console.log(JSON.stringify(handInfo));
     console.log("*********")
 
-    // 只传递了手牌编码过去, 其他都未包含
-    let winHandTiles = handInfo.winHand; // e.g. ["4s4s4s", "3m3m3m", "0m6m7m", "6p7p8p", "9p9p"]
-    let winHandJson = [];
-    for (let j=0; j < 2*14; j = j+2) {
-        winHandJson.push(JSON.parse(
-            '{"tileCode": ' + '"' + winHandTiles.join('').substr(j, 2) + '"}'
-        ));
-    }
-
     handInfo.totalPoint = totalPoint;
-    handInfo.winHandJson = winHandJson;
     return handInfo;
 }
 

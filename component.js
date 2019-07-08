@@ -3,7 +3,6 @@ Vue.component('hand-img', {
     template: '<img v-bind:src="\'tile/\' + tile.tileCode + \'.gif\'" />'
 });
 
-
 var init = new Vue({
     data: {
         winHand: handInfo = start(),
@@ -13,7 +12,15 @@ var init = new Vue({
 var winHand = new Vue({
     el: '#winHand',
     data: {
-        tileList: init.winHand.winHandJson
+        tileList: winHandJson = (function () {
+            let json = [];
+            for (let j=0; j < 2*14; j = j+2) {
+                json.push(JSON.parse(
+                    '{"tileCode": ' + '"' + init.winHand.winHand.join('').substr(j, 2) + '"}'
+                ));
+            }
+            return json;
+        }) (),
     },
 });
 
