@@ -21,6 +21,7 @@
     <div id="pointsInput">
         <input>
         <button @click="checkAnswer">确认</button>
+        <p v-if="showAnswer">{{ totalPoint }}</p>
     </div>
 
     <div id="testResult">

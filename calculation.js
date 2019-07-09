@@ -16,11 +16,12 @@ function start() {
     };
 
     let totalPoint = calPoint(handInfo); // 计算目前手牌翻
+    handInfo.totalPoint = totalPoint;
+
     console.log("总分", totalPoint)
     console.log(JSON.stringify(handInfo));
     console.log("*********")
 
-    handInfo.totalPoint = totalPoint;
     return handInfo;
 }
 
